@@ -29,8 +29,8 @@ export default {
     },
     created() {
         const that = this;
-        const sysConifg = eval("("+Store.state.sysConfig+")");
-        
+        const sysConifg = eval("("+Store.state.sysConfig+")")
+        console.log(Store.state)
         sysConifg.map(item => {
             if(item.cfgkey == "systemName") {
                 that.topTitle = item.description

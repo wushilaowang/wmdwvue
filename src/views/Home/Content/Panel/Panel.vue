@@ -1,16 +1,26 @@
 <template>
     <div class="panel-container">
         <Crumbs/>
-        <div class="panel-content"></div>
+        <div class="panel-content">
+            <Search/>
+            <ButtonList/>
+            <Table/>
+        </div>
     </div>
 </template>
 
 <script>
-import Crumbs from './Crumbs'
+import Crumbs from './Crumbs';
+import Search from '../../../../components/common/search/Search';
+import ButtonList from '../../../../components/common/ButtonList/ButtonList';
+import Table from '../../../../components/common/table/Table';
 export default {
     name: "Panel",
     components: {
-        Crumbs
+        Crumbs,
+        Search,
+        ButtonList,
+        Table
     }
 }
 </script>

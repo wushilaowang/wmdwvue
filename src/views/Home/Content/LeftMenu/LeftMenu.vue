@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import Bus from '../../../../utils/bus'
 import {requestNoParam} from "../../../../network/login"
 import Store from "../../../../store/index";
 export default {
@@ -22,16 +23,22 @@ export default {
     data() {
         return {
             userName: '',
-            loginNum: 0,
+            loginNum: 1,
             headImg: '',
             treeData: []
         }
     },
+    // computed: {
+    //     realName() {
+    //         return eval("("+Store.state.userInfo+")")
+    //     }
+    // },
     methods: {
         //菜单节点点击
         handleNodeClick(e) {
             if(e.menuUrl) {
                 console.log(e.menuUrl)
+                Bus.$emit("menuClick", e)
             }
             
         },
@@ -41,12 +48,10 @@ export default {
             this.userName = realName.realName;
             //登录人数
             requestNoParam("/user/loginNum").then(res => {
-                console.log(res)
                 that.loginNum = res.data
             })
             //头像
             requestNoParam('/user/headImg/current').then(res => {
-                console.log(res)
                 if(!res.data) {
                     that.headImg = require("@/assets/image/userPhoto.png");
                 }else {
@@ -55,9 +60,7 @@ export default {
             })
             //菜单
             requestNoParam('/menu').then(res => {
-                console.log(res)
                 const userInfo = eval("("+Store.state.userInfo+")");
-                console.log(userInfo.perms.menuIds)
                 const userMenuId = userInfo.perms.menuIds;
                 const userMenuArr = []
                 res.data.map(item => {
@@ -77,7 +80,8 @@ export default {
                             if(item.sysMenuId == item2.sysMenuParent) {
                                 const children = {
                                     label: item2.menuName,
-                                    menuUrl: item2.menuUrl
+                                    menuUrl: item2.menuUrl,
+                                    sysId: item2.sysMenuId
                                 }
                                 childrenArr.push(children)
                             }
@@ -88,10 +92,6 @@ export default {
                 })
                 console.log(treeArr)
                 that.treeData = treeArr;
-                treeArr.map(res => [
-                    console.log(res)
-                ])
-                console.log(userMenuArr)
             })
         }
     },

@@ -107,10 +107,8 @@ export default {
                             message: "密码错误"
                         })
                     }else if(res.status == 200){
-                        this.$cookies.get("JSESSIONID")
-                        console.log(this.$cookies)
                         Store.commit("mutationsSetUserInfo", res.data)
-                        that.$router.push('/home')
+                        that.$router.replace('/home')
                     }
                 })
             }
@@ -121,7 +119,7 @@ export default {
         Promise.all([requestNoParam('/config'), requestNoParam('/imginfo'), requestNoParam('/sys-param'), requestNoParam('/district'), ]).then(res => {
             //加载配置参数
             const result1 = res[0].data
-            Store.commit('mutationsSetConfig', result1)
+            Store.commit('mutationsSetSysConfig', result1)
             console.log(Store.state)
             result1.map(item => {
                 if(item.cfgkey == "systemName") {
@@ -149,6 +147,7 @@ export default {
             const result4 = res[3].data;
             Store.commit('mutationsSetDistrict', result4);
         })
+        console.log(Store.state)
     }
 }
 </script>

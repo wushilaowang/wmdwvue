@@ -12,6 +12,8 @@ Vue.config.productionTip = false
 Vue.use(VueCookies)
 
 Vue.use(ElementUI)
+
+
 new Vue({
   router,
   store,
