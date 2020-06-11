@@ -2,6 +2,7 @@
     <div>
         <Header/>
         <Content/>
+        <router-view name="panelContent"></router-view>
     </div>
 </template>
 

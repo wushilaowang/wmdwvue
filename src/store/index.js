@@ -12,6 +12,8 @@ const state =  sessionStorage.getItem('state') ? JSON.parse(sessionStorage.getIt
   sysParam: {},//字典
   district: {},//地区
   userInfo: {},//登陆用户信息
+  userFunctionPerm: [],//当前用户操作权限
+  allFunctionPerm: [],//所有操作权限
 };
 const mutations = {
   setToken(state, token) {
@@ -31,6 +33,12 @@ const mutations = {
   },
   mutationsSetUserInfo(state, payload) {
     state.userInfo = JSON.stringify(payload)
+  },
+  mutationsSetUserFunctionPerm(state, payload) {
+    state.userFunctionPerm = JSON.stringify(payload)
+  },
+  mutationsSetAllFunctionPerm(state, payload) {
+    state.allFunctionPerm = JSON.stringify(payload)
   }
 };
 const actions = {

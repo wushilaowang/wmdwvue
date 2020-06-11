@@ -60,6 +60,7 @@ export default {
             })
             //菜单
             requestNoParam('/menu').then(res => {
+                console.log(eval("("+Store.state.userInfo+")"))
                 const userInfo = eval("("+Store.state.userInfo+")");
                 const userMenuId = userInfo.perms.menuIds;
                 const userMenuArr = []
@@ -70,6 +71,7 @@ export default {
                         }
                     })
                 })
+                console.log(userMenuArr)
                 const treeArr = [];
                 userMenuArr.map(item => {
                     if(item.menuType == "NODE") {
@@ -92,6 +94,26 @@ export default {
                 })
                 console.log(treeArr)
                 that.treeData = treeArr;
+
+                //用户操作权限
+                const userFunctionArr = [];
+                userMenuArr.map(item => {
+                    if(item.menuType == 'FUNCTION') {
+                        userFunctionArr.push(item)
+                    }
+                })
+                Store.commit('mutationsSetUserFunctionPerm', userFunctionArr)
+                console.log(userFunctionArr)
+                
+                //所有操作权限
+                const allFunctionArr = [];
+                res.data.map(item => {
+                    if(item.menuType == 'FUNCTION') {
+                        allFunctionArr.push(item)
+                    }
+                })
+                Store.commit('mutationsSetAllFunctionPerm', allFunctionArr)
+                console.log(allFunctionArr)
             })
         }
     },

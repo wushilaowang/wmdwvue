@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 const Login = () => import('../views/Login.vue')
 const Home = () => import('../views/Home/Home.vue')
+const panelContent = () => import('../views/Home/Content/Panel/PanelContent')
 
 Vue.use(VueRouter)
 
@@ -12,11 +13,16 @@ Vue.use(VueRouter)
   },
   {
     path: '/login',
+    name: 'login',
     component: Login
   },
   {
     path: '/home',
-    component: Home
+    name: 'home',
+    component: Home,
+    children: [
+      {path: 'panelContent', name: 'panelContent', component: panelContent}
+    ]
   }
 ]
 const router = new VueRouter({

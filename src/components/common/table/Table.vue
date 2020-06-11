@@ -1,6 +1,7 @@
 <template>
     <div>      
-        表格
+        <div class="thead"></div>
+        <div class="tbody"></div>
     </div>
 </template>
 

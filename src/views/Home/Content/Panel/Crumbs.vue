@@ -1,24 +1,33 @@
 <template>
-    <div class="crumbs-container">
-        <ul>
-            <li v-for="(item, index) in tabs" :key="index">
-                <div :class="{active: chooseIndex == item.name, 'tab-item': true, 'last-tab': item.index == tabIndex}">
-                    <span :class="{'menu-tab': true, 'first-tab': item.name == 1}" @click="handleTabChoose(item.name)">{{item.title}}</span>
-                    <div class="close-outer"><span v-if="item.closable" class="tab-close iconfont icon-close" @click="handleClose(item.name)"></span></div>
-                </div>
-            </li>
-        </ul>
+    <div>
+        <div class="crumbs-container">
+            <ul>
+                <li v-for="(item, index) in tabs" :key="index">
+                    <div :class="{active: chooseIndex == item.name, 'tab-item': true, 'last-tab': item.index == tabIndex}">
+                        <span :class="{'menu-tab': true, 'first-tab': item.name == 1}" @click="handleTabChoose(item.name)">{{item.title}}</span>
+                        <div class="close-outer"><span v-if="item.closable" class="tab-close iconfont icon-close" @click="handleClose(item.name)"></span></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-outer" v-for="(item, index) in tabs" :key="index">
+            <PanelContent :menuUrl="item" :class="{'content-normal': true, 'content-active': item.name == chooseIndex}"/>
+        </div>
     </div>
 </template>
 
 <script>
 import Bus from '../../../../utils/bus'
+import PanelContent from './PanelContent'
 export default {
     name: "Crumbs",
+    components: {
+        PanelContent,
+    },
     data() {
         return {
             chooseIndex: 1,
-            tabs: [{title: '系统首页', name: 1, closable: false, index: 1}],
+            tabs: [{title: '系统首页', name: 1, closable: false, index: 1, menuUrl: 'homePage'}],
             tabIndex: 1,
         }
     },
@@ -58,6 +67,7 @@ export default {
                 name: e.sysId,
                 closable: true,
                 index: that.tabIndex + 1,
+                menuUrl: e.menuUrl
             }
             let flag = true;
             that.tabs.map(item => {
@@ -85,11 +95,9 @@ export default {
 
     }
     .crumbs-container {
-        height: 5%;
+        height: 30px;
         margin-bottom: 10px;
         /* background-color: white; */
-        border: solid white 1px;
-        border-radius: 7px;
         font-size: 12px;
     }
 
@@ -129,5 +137,16 @@ export default {
     .active {
         background-color: #1f7abb;
         color: white;
+    }
+
+    .content-outer {
+        position: relative;
+    }
+    .content-normal {
+        position: absolute;
+        opacity: 0;
+    }
+    .content-active {
+        opacity: 1;
     }
 </style>
