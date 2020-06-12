@@ -16,7 +16,7 @@ export default function request(options) {
 
     instance.interceptors.response.use(res => {
         
-        return res.data
+        return res
     },error => {
         return error
     })

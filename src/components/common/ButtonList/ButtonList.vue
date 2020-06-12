@@ -1,12 +1,12 @@
 <template>
-    <div>
-       <el-button v-if="isShowButton([{parent: 1008, self: 8034}])" @click="handleQuery">新增</el-button>
+    <div class="buttonList">
+       <el-button v-if="isShowButton([{parent: 1008, self: 8034}])" >新增</el-button>
        <el-button v-if="isShowButton([{parent: 1004, self: 8021}])" @click="handleQuery">查询</el-button>
-       <el-button v-if="isShowButton([{parent: 1004, self: 8025}])" @click="handleQuery">导出</el-button>
-       <el-button v-if="isShowButton([{parent: 2002, self: 8082}])" @click="handleQuery">删除</el-button>
+       <el-button v-if="isShowButton([{parent: 1004, self: 8025}])">导出</el-button>
+       <el-button v-if="isShowButton([{parent: 2002, self: 8082}])">删除</el-button>
        <el-button @click="handleReset">重置</el-button>
        <el-button @click="handleClose">关闭</el-button>
-       <el-button v-if="isShowButton([{parent: 2002, self: 8085}])" @click="handleQuery">审核拒绝</el-button>
+       <el-button v-if="isShowButton([{parent: 2002, self: 8085}])">审核拒绝</el-button>
        <el-button v-if="isShowButton([{parent: 2002, self: 8081}])" @click="handleReset">归档</el-button>
        
 
@@ -57,9 +57,9 @@ export default {
         },
     },
     methods: {
-        
         handleQuery() {
             console.log(3)
+            this.$emit('query', this.menuUrl)
         },
         handleReset() {
 
@@ -75,5 +75,7 @@ export default {
 </script>
 
 <style scoped>
-
+    .buttonList {
+        margin: 10px 0;
+    }
 </style>

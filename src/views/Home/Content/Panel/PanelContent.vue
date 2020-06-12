@@ -1,11 +1,13 @@
 <template>
     <div class="panel-content">
-        {{menuUrl}}
-        <div></div>
-        <div>
-            <Search :searchList="searchList" :menuUrl="menuUrl"/>
-            <ButtonList  :menuUrl="menuUrl"/>
-            <Table/>
+        <div class="panel-content-container">
+            {{menuUrl}}
+            <div></div>
+            <div class="content">
+                <Search :searchList="searchList" :menuUrl="menuUrl"/>
+                <ButtonList @query="handleQuery" :menuUrl="menuUrl"/>
+                <Table ref="table" :menuUrl="menuUrl"/>
+            </div>
         </div>
     </div>  
 </template>
@@ -32,6 +34,9 @@ export default {
         }
     },
     methods: {
+        handleQuery(menuUrl) {
+            this.$refs.table.queryUnit()
+        }
     },
     mounted() {
         const that = this;
@@ -49,10 +54,20 @@ export default {
 <style scoped>
 
     .panel-content {
-        height: 75vh;
         width: 100%;
-        /* background-color: white; */
+        background-color: white;
         border: 1px solid white;
         border-radius: 10px;
+    }
+    .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .panel-content-container {
+        height: 75vh;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
     }
 </style>

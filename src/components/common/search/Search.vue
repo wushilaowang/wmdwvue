@@ -1,8 +1,8 @@
 <template>
     <div class="search-row">
         <div v-if="isShowSearch([8014])">标准名称:<input type="text"></div>         
-        <div v-if="isShowSearch([1004])">单位全称:<input type="text"></div>         
-        <div v-if="isShowSearch([2002, 1004])">标题:<input type="text"></div>         
+        <div v-if="isShowSearch([1004, 2002])">单位全称:<input type="text"></div>         
+        <div v-if="isShowSearch([2002])">标题:<input type="text"></div>         
     </div>
 </template>
 

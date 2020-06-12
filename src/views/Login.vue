@@ -96,18 +96,18 @@ export default {
                 }
                 login(param).then(res => {
                     console.log(res)
-                    if(res.status == 1003) {
+                    if(res.data.status == 1003) {
                         this.$notify({
                             title: "提示",
-                            message: res.message
+                            message: res.data.message
                         })
-                    }else if(res.status == 1004) {
+                    }else if(res.data.status == 1004) {
                         this.$notify({
                             title: "提示",
                             message: "密码错误"
                         })
-                    }else if(res.status == 200){
-                        Store.commit("mutationsSetUserInfo", res.data)
+                    }else if(res.data.status == 200){
+                        Store.commit("mutationsSetUserInfo", res.data.data)
                         that.$router.replace('/home')
                     }
                 })
@@ -118,7 +118,7 @@ export default {
         const that = this;
         Promise.all([requestNoParam('/config'), requestNoParam('/imginfo'), requestNoParam('/sys-param'), requestNoParam('/district'), ]).then(res => {
             //加载配置参数
-            const result1 = res[0].data
+            const result1 = res[0].data.data
             Store.commit('mutationsSetSysConfig', result1)
             console.log(Store.state)
             result1.map(item => {
@@ -134,17 +134,17 @@ export default {
             })
             //加载轮播图
             const result2 = [];
-            res[1].data.map(item => {
+            res[1].data.data.map(item => {
                 if(item.position == 1 && item.enable == 1) {
                     result2.push(item)
                 }
             })
             that.loginImage = result2;
             //加载字典
-            const result3 = res[2].data;
+            const result3 = res[2].data.data;
             Store.commit('mutationsSetSysParam', result3);
             //加载区域
-            const result4 = res[3].data;
+            const result4 = res[3].data.data;
             Store.commit('mutationsSetDistrict', result4);
         })
         console.log(Store.state)

@@ -22,7 +22,6 @@ export default {
         background-color: #d2e4f0;
         padding: 10px;
 
-        width: 100%-20px;
         height: 91vh;
         display: flex;
     }

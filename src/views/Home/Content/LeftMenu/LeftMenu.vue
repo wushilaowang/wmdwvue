@@ -15,8 +15,9 @@
 </template>
 
 <script>
-import Bus from '../../../../utils/bus'
-import {requestNoParam} from "../../../../network/login"
+import {compare} from '../../../../utils/util'
+import Bus from '../../../../utils/bus';
+import {requestNoParam} from "../../../../network/login";
 import Store from "../../../../store/index";
 export default {
     name: "LeftMenu",
@@ -48,14 +49,14 @@ export default {
             this.userName = realName.realName;
             //登录人数
             requestNoParam("/user/loginNum").then(res => {
-                that.loginNum = res.data
+                that.loginNum = res.data.data
             })
             //头像
             requestNoParam('/user/headImg/current').then(res => {
-                if(!res.data) {
+                if(!res.data.data) {
                     that.headImg = require("@/assets/image/userPhoto.png");
                 }else {
-                    that.headImg = res.data
+                    that.headImg = res.data.data
                 }
             })
             //菜单
@@ -64,7 +65,7 @@ export default {
                 const userInfo = eval("("+Store.state.userInfo+")");
                 const userMenuId = userInfo.perms.menuIds;
                 const userMenuArr = []
-                res.data.map(item => {
+                res.data.data.map(item => {
                     userMenuId.map(item2 => {
                         if(item.sysMenuId == item2) {
                             userMenuArr.push(item)
@@ -83,8 +84,11 @@ export default {
                                 const children = {
                                     label: item2.menuName,
                                     menuUrl: item2.menuUrl,
-                                    sysId: item2.sysMenuId
+                                    sysId: item2.sysMenuId,
+                                    sort: item2.sortIdx
                                 }
+
+                                childrenArr.sort(compare('sort'))
                                 childrenArr.push(children)
                             }
                         })
@@ -107,7 +111,7 @@ export default {
                 
                 //所有操作权限
                 const allFunctionArr = [];
-                res.data.map(item => {
+                res.data.data.map(item => {
                     if(item.menuType == 'FUNCTION') {
                         allFunctionArr.push(item)
                     }
